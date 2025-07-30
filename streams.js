@@ -9,18 +9,25 @@ server.on('request',(req,res)=>{
     // })
 
     ////////////solution 2: Streams
+    // const readable = fs.createReadStream('test-file.txt')
+    // readable.on('data',chunk=>{
+    //     res.write(chunk)
+    // })
+    // readable.on('end',()=>{
+    //     res.end();
+    // })
+    // readable.on('error',err=>{
+    //     console.log(err)
+    //     res.statusCode(500)
+    //     res.end('file not found')
+    // })
+
+    /////////////////solution 3: pipe
+
     const readable = fs.createReadStream('test-file.txt')
-    readable.on('data',chunk=>{
-        res.write(chunk)
-    })
-    readable.on('end',()=>{
-        res.end();
-    })
-    readable.on('error',err=>{
-        console.log(err)
-        res.statusCode(500)
-        res.end('file not found')
-    })
+    readable.pipe(res);
+        
+
 })
 
 server.listen(7000,'127.0.0.1',()=>{
